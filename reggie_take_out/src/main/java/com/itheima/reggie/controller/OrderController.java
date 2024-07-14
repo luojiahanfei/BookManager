@@ -23,12 +23,11 @@ public class OrderController {
 
     /**
      * 用户下单
-     *
      * @param orders
      * @return
      */
     @PostMapping("/submit")
-    public R<java.lang.Object> submit(@RequestBody Orders orders){
+    public R<String> submit(@RequestBody Orders orders){
         log.info("订单数据：{}",orders);
         orderService.submit(orders);
         return R.success("下单成功");
