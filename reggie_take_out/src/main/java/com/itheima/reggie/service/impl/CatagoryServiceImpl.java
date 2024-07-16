@@ -2,8 +2,8 @@ package com.itheima.reggie.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itheima.reggie.entity.Category;
-import com.itheima.reggie.mapper.CategorMapper;
-import com.itheima.reggie.service.CategroyService;
+import com.itheima.reggie.mapper.CategoryMapper;
+import com.itheima.reggie.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 
