@@ -6,7 +6,7 @@ import com.itheima.reggie.common.R;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Dish;
-import com.itheima.reggie.service.CategoryService;
+import com.itheima.reggie.service.CategroyService;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class DishController {
     private DishFlavorService dishFlavorService;
 
     @Autowired
-    private CategoryService categoryService;
+    private CategroyService categoryService;
 
     /**
      * 新增菜品
