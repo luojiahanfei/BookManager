@@ -111,6 +111,8 @@ public class EmployeeController {
     public R<String> update(HttpServletRequest request,@RequestBody Employee employee){
         log.info(employee.toString());
 
+        long id=Thread.currentThread().getId();
+        log.info("线程id为:{}",id);
 //        Long empId = (Long) request.getSession().getAttribute("employee");
 //        employee.setUpdateTime(LocalDateTime.now());
 //        employee.setUpdateUser(empId);
@@ -124,9 +126,9 @@ public class EmployeeController {
      */
     @GetMapping("/{id}")
     public R<Employee> getById(@PathVariable Long id){
+        log.info("根据id查询信息...");
         Employee employee = employeeService.getById(id);
         if (employee!=null){
-
             return R.success(employee);
         }else {
             return R.error("没查到该员工");
