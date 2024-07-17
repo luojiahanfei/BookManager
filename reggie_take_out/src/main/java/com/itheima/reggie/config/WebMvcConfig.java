@@ -45,7 +45,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //创建消息转换器对象
         MappingJackson2HttpMessageConverter messageConverter= new MappingJackson2HttpMessageConverter();
         //设置对象转换器，使用Jackson
-        messageConverter.setObjectMapper((new JacksonObjectMapper()));
+        messageConverter.setObjectMapper(new JacksonObjectMapper());
         //优先使用自定义的
         converters.add(0, messageConverter);
     }
