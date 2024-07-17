@@ -66,7 +66,38 @@ public class AddressBookController {
             return R.error("没有找到该对象");
         }
     }
+    /**
+     * 删除地址
+     * @param id
+     * @return
+     */
+    @DeleteMapping
+    public R<String> delete(@RequestParam("id") Long id){
+        if(id==null){
+            return R.error("请求异常");
+        }
+        LambdaQueryWrapper<AddressBook> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(AddressBook::getId,id).eq(AddressBook::getUserId,BaseContext.getCurrentId());
+        addressBookService.remove(queryWrapper);
+        //addressBookService.removeById(id);直接使用这个removeById不太严谨.....
+        return R.success("删除地址成功");
+    }
 
+    /**
+     * 修改地址
+     * @param addressBook
+     * @return
+     */
+    @PutMapping
+    public R<String> update(@RequestBody AddressBook addressBook){
+
+        if(addressBook==null){
+            return R.error("请求异常");
+        }
+        addressBookService.updateById(addressBook);
+        return R.success("修改成功");
+
+    }
     /**
      * 查询默认地址
      */
