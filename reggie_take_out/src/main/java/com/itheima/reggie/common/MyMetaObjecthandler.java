@@ -26,7 +26,7 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("公共字段自动填充update");
+        log.info("公共字段自动填充[update]...");
         log.info(metaObject.toString());
         long id = Thread.currentThread().getId();
         log.info("线程id为：{}",id);

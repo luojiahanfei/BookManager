@@ -41,7 +41,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
 
         //菜品口味
         List<DishFlavor> flavors = dishDto.getFlavors();
-        flavors = flavors.stream().map((item) -> {
+        flavors.stream().map(item -> {
             item.setDishId(dishId);
             return item;
         }).collect(Collectors.toList());

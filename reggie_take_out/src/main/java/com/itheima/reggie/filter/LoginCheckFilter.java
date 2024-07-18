@@ -17,7 +17,6 @@ import java.io.IOException;
 //检查用户是否登陆
 @WebFilter(filterName = "LoginCheckFilter",urlPatterns = "/*")
 @Slf4j
-@ServletComponentScan
 public class LoginCheckFilter implements Filter {
 
     //路径匹配器，支持通配符

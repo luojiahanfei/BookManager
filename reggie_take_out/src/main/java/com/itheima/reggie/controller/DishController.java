@@ -113,7 +113,7 @@ public class DishController {
      * @return
      */
     @GetMapping("/{id}")
-    public R<DishDto> get(@PathVariable Long id){
+    public R<DishDto> get(@PathVariable("id") Long id){
 
         DishDto dishDto = dishService.getByIdWithFlavor(id);
 

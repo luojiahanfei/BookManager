@@ -106,16 +106,13 @@ public class SetmealController {
     @PostMapping("/status/{status}")
     @CacheEvict(value = "setmealCache", allEntries = true)
     public R<String> status(@PathVariable("status") Integer status,@RequestParam List<Long> ids) {
-        LambdaQueryWrapper<Setmeal> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.in(ids!=null,Setmeal::getId,ids);
-        List<Setmeal> setmeals = setmealService.list(queryWrapper);
-        for (Setmeal setmeal : setmeals) {
-            if (setmeal!=null){
-                setmeal.setStatus(status);
-                setmealService.updateById(setmeal);
-            }
+        Setmeal setmeal = new Setmeal();
+        for (Long dishId : ids) {
+            setmeal.setId(dishId);
+            setmeal.setStatus(status);
+            setmealService.updateById(setmeal);
         }
-        return R.success("售卖状态修改成功");
+        return R.success("修改成功");
     }
 
     /**
@@ -137,7 +134,7 @@ public class SetmealController {
      * 就是修改时，信息回显到添加框里
      */
     @GetMapping("/{id}")
-    public R<SetmealDto> get(@PathVariable Long id){
+    public R<SetmealDto> getData(@PathVariable Long id){
         SetmealDto setmealDto = setmealService.getByIdWithDishes(id);
         return R.success(setmealDto);
     }
@@ -148,10 +145,29 @@ public class SetmealController {
     @PutMapping
     @CacheEvict(value = "setmealCache", allEntries = true)
     public R<String> update(@RequestBody SetmealDto setmealDto){
-        log.info(setmealDto.toString());
+        if (setmealDto==null){
+            return R.error("请求异常");
+        }
 
-        setmealService.updateWithDishes(setmealDto);
-        return R.success("修改菜品成功");
+        if (setmealDto.getSetmealDishes()==null){
+            return R.error("套餐没有菜品,请添加套餐");
+        }
+        List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
+        Long setmealId = setmealDto.getId();
+
+        LambdaQueryWrapper<SetmealDish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SetmealDish::getSetmealId,setmealId);
+        setmealDishService.remove(queryWrapper);
+
+        //为setmeal_dish表填充相关的属性
+        for (SetmealDish setmealDish : setmealDishes) {
+            setmealDish.setSetmealId(setmealId);
+        }
+        //批量把setmealDish保存到setmeal_dish表
+        setmealDishService.saveBatch(setmealDishes);
+        setmealService.updateById(setmealDto);
+
+        return R.success("套餐修改成功");
     }
 
     /**
